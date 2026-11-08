@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { Link } from "react-router";
+import Game from "./game/Game.jsx";
 
 /* Each slide is just a component. Add, remove or reorder them here —
    the router (/#/1, /#/2, ...) follows this list automatically. */
@@ -81,33 +82,8 @@ function IBuildApps() {
   );
 }
 
-const times = (n) => (n % 10 === 1 && n % 100 !== 11 ? "пут" : "пута");
-
-function TinyApp() {
-  const [count, setCount] = useState(0);
-  return (
-    <>
-      <h2>Хајде да погледамо једну малу апликацију</h2>
-      <div className="compare">
-        <div className="box code">
-          <p className="note">Моја упутства (код):</p>
-          <pre>
-{`button.onClick(() => {
-  say("Здраво, другари!")
-  counter = counter + 1
-})`}
-          </pre>
-        </div>
-        <div className="box app">
-          <button className="press" onClick={() => setCount((c) => c + 1)}>
-            Притисни ме
-          </button>
-          <p className="lead">{count === 0 ? "…" : "Здраво, другари! 👋"}</p>
-          <p>Притиснуто {count} {times(count)}</p>
-        </div>
-      </div>
-    </>
-  );
+function GameSlide() {
+  return <Game />;
 }
 
 function HowIMakeIt() {
@@ -121,21 +97,6 @@ function HowIMakeIt() {
         <li><strong>Поправим</strong> грешке. Зовемо их „багови“ 🐛</li>
         <li><strong>Поделим</strong> је са људима!</li>
       </ol>
-    </>
-  );
-}
-
-function BugStory() {
-  return (
-    <>
-      <h2>Зашто се грешка зове „баг“?</h2>
-      <p className="lead">
-        Године 1947. један рачунар је престао да ради. Унутра су пронашли правог мољца 🦋
-      </p>
-      <p>Тим Грејс Хопер га је залепио у свеску као „први прави баг“.</p>
-      <p className="note">
-        На енглеском „баг“ значи буба. Данас се поправљање грешака у коду зове <strong>дебаговање</strong>.
-      </p>
     </>
   );
 }
@@ -160,6 +121,18 @@ const question = (text, hint, kicker = "Подигните руку ✋") =>
     );
   };
 
+function FindTheBug() {
+  const gameSlide = slides.indexOf(GameSlide) + 1;
+  return (
+    <>
+      <h1>Хајде да пронађемо баг! 🐛</h1>
+      <p className="lead">Када падне шестица, играч треба да баца поново. Али у нашој игри не баца!</p>
+      <p className="note">Хајде да погледамо код. Ко може да пронађе грешку?</p>
+      <Link className="back-link" to={`/${gameSlide}`}>Назад у игру →</Link>
+    </>
+  );
+}
+
 function ThankYou() {
   return (
     <>
@@ -169,20 +142,20 @@ function ThankYou() {
   );
 }
 
-export default [
+const slides = [
   Title,
   WhatIsSoftware,
   TwoKinds,
   IBuildApps,
-  TinyApp,
+  GameSlide,
   HowIMakeIt,
-  BugStory,
   QuestionsIntro,
   question("Ко је користио рачунар?"),
   question("Ко користи телефон или таблет?"),
-  question("Ко је играо игрицу на екрану?", "Ту игрицу је направио неко као ја!"),
-  question("Која је ваша омиљена апликација?", "Шта вам се свиђа у њој?", "Реците ми 💬"),
-  question("Ко мисли да су рачунари паметни?", "Трик питање: раде само оно што им кажемо!"),
+  question("Како сте користили рачунар, телефон или таблет?", null, "Реците ми 💬"),
   question("Да можете да направите било коју апликацију, шта би она радила?", null, "Реците ми 💬"),
+  FindTheBug,
   ThankYou,
 ];
+
+export default slides;

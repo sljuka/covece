@@ -73,18 +73,6 @@ pre {
   white-space: pre-wrap;
 }
 
-.press {
-  font: inherit;
-  font-size: 1.2em;
-  padding: 0.5em 1.4em;
-  border: 3px solid var(--fg);
-  border-radius: 999px;
-  background: var(--bg);
-  color: var(--fg);
-  cursor: pointer;
-}
-.press:active { background: var(--fg); color: var(--bg); }
-
 .controls {
   display: flex;
   align-items: center;

@@ -1,0 +1,189 @@
+.game {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3vw;
+}
+
+/* ---- Board ---- */
+.board {
+  --size: min(calc(92vh - 100px), 58vw);
+  position: relative;
+  width: var(--size);
+  height: var(--size);
+  flex: none;
+  border: 2px solid var(--fg);
+  border-radius: 20px;
+  background: #fbfaf7;
+}
+.grid { position: absolute; inset: 2.5%; }
+
+.cell, .piece {
+  position: absolute;
+  width: calc(100% / 11);
+  height: calc(100% / 11);
+}
+.cell::before {
+  content: "";
+  position: absolute;
+  inset: 12%;
+  border-radius: 50%;
+  border: 2px solid #333;
+  background: #fff;
+}
+.cell.start::before { background: color-mix(in srgb, var(--c) 65%, white); }
+.cell.home::before { background: color-mix(in srgb, var(--c) 35%, white); }
+.cell.yard::before { background: color-mix(in srgb, var(--c) 18%, white); border-style: dashed; }
+
+.piece {
+  border: 0;
+  padding: 0;
+  background: none;
+  z-index: 2;
+  transition: left 0.2s ease, top 0.2s ease;
+}
+.piece::before {
+  content: "";
+  position: absolute;
+  inset: 20%;
+  border-radius: 50%;
+  background: var(--c);
+  border: 3px solid #222;
+  box-shadow: 0 3px 0 rgba(0, 0, 0, 0.35);
+}
+.piece.movable { cursor: pointer; z-index: 3; }
+.piece.movable::before { animation: hop 0.45s ease-in-out infinite alternate; }
+@keyframes hop {
+  to {
+    transform: translateY(-18%) scale(1.12);
+    box-shadow: 0 10px 6px rgba(0, 0, 0, 0.25);
+  }
+}
+
+/* ---- Side panel ---- */
+.panel {
+  width: clamp(240px, 24vw, 380px);
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7em;
+  text-align: left;
+  font-size: 0.8em;
+}
+.turn {
+  display: flex;
+  align-items: center;
+  gap: 0.8em;
+  border: 2px solid var(--line);
+  border-radius: 16px;
+  padding: 0.7em 1em;
+}
+.token {
+  width: 2.6em;
+  height: 2.6em;
+  flex: none;
+  border-radius: 50%;
+  background: var(--c);
+  border: 3px solid #222;
+  transition: background 0.3s;
+}
+.turn-name { font-size: 1.6em; font-weight: 700; line-height: 1.1; }
+.status { min-height: 1.4em; }
+
+.roll {
+  font: inherit;
+  font-size: 1.1em;
+  padding: 0.6em 1em;
+  border: 3px solid var(--fg);
+  border-radius: 999px;
+  background: var(--fg);
+  color: var(--bg);
+  cursor: pointer;
+}
+.roll-row { display: flex; gap: 0.5em; }
+.roll-row .roll { flex: 1; }
+.roll-row .roll.six {
+  flex: none;
+  width: 2.6em;
+  padding: 0;
+  font-size: 0.9em;
+  font-weight: 700;
+  background: var(--bg);
+  color: var(--fg);
+  border-width: 2px;
+}
+.roll-row .roll.six:disabled { color: var(--muted); border-color: var(--line); }
+.roll:disabled { background: var(--bg); color: var(--muted); border-color: var(--line); cursor: default; }
+
+.last { display: flex; align-items: center; gap: 0.5em; min-height: 2.4em; white-space: nowrap; }
+
+.log ul { margin: 0.2em 0 0; padding: 0; list-style: none; font-size: 0.75em; }
+.log li { padding: 0.2em 0; border-bottom: 1px solid var(--line); }
+.log code { display: block; font-size: 0.8em; color: var(--muted); }
+
+.link {
+  align-self: flex-start;
+  padding: 0;
+  font: inherit;
+  font-size: 0.8em;
+  color: var(--muted);
+  background: none;
+  border: 0;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* ---- Dice ---- */
+.face {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 6%;
+  padding: 14%;
+}
+.face span { border-radius: 50%; }
+.face .pip { background: #111; }
+.face.small {
+  flex: none;
+  width: 2.4em;
+  height: 2.4em;
+  padding: 0.32em;
+  gap: 0.12em;
+  background: #fff;
+  border: 2px solid #111;
+  border-radius: 18%;
+}
+
+.dice-stage {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.dice-wrap { position: absolute; opacity: 0; perspective: 900px; }
+.cube {
+  --s: min(18vh, 160px);
+  --half: calc(var(--s) / 2);
+  position: relative;
+  width: var(--s);
+  height: var(--s);
+  transform-style: preserve-3d;
+}
+.side {
+  position: absolute;
+  inset: 0;
+  border-radius: 16%;
+  border: 3px solid rgba(20, 20, 20, 0.6);
+  background: rgba(255, 255, 255, 0.15);
+  transition: background 0.3s;
+}
+.cube.settled .side { background: rgba(255, 255, 255, 0.97); }
+
+/* ---- Find the bug slide ---- */
+.back-link { color: var(--fg); font-size: 0.9em; margin-top: 0.6em; }
