@@ -9,7 +9,6 @@ function Title() {
     <>
       <p className="kicker">Ћао! Ја сам Давид</p>
       <h1>Шта ради софтверски инжењер?</h1>
-      <p className="lead">Ја дајем инструкције рачунарима шта да раде.</p>
     </>
   );
 }
@@ -36,31 +35,14 @@ function WhatIsSoftware() {
   );
 }
 
-function TwoKinds() {
+function WhatIsApp() {
   return (
     <>
-      <h2>Две врсте софтвера</h2>
-      <div className="compare">
-        <div className="box">
-          <h3>Системски софтвер</h3>
-          <p>Скривени помагачи.</p>
-          <p>Они покрећу сам рачунар: укључивање, екран, тастатуру, интернет.</p>
-        </div>
-        <div className="box">
-          <h3>Апликације</h3>
-          <p>Програми које ви користите.</p>
-          <p>Игрице, видео-снимци, цртање, мапе, поруке, музика.</p>
-        </div>
-      </div>
-    </>
-  );
-}
-
-function IBuildApps() {
-  return (
-    <>
-      <h2>Ја правим апликације</h2>
-      <p className="lead">Апликација се састоји од:</p>
+      <h2>Шта је апликација?</h2>
+      <p className="lead small">
+        Апликација је <strong>програм</strong> који је намењен људима да обаве неки посао.
+      </p>
+      <p className="note">Састоји се од:</p>
       <div className="grid3">
         <div className="box">
           <div className="big">🖼️</div>
@@ -82,6 +64,47 @@ function IBuildApps() {
   );
 }
 
+// Slike: Wikimedia Commons
+// golub.jpg  - "A Sig Corps pigeon has a message capsule attached to its leg" (1944), javno vlasnistvo
+// postar.jpg - "Postman, 1992", Sven Tideman, CC0
+// biblioteka.jpg - "Stockholms stadsbibliotek rotundan", javno vlasnistvo
+function BeforeComputers() {
+  return (
+    <>
+      <h2>Како су људи некада слали поруке?</h2>
+      <div className="compare">
+        <div className="box">
+          <div className="photo">
+            <img src="images/golub.jpg" alt="Голуб писмоноша" />
+          </div>
+          <h3>Голуб писмоноша</h3>
+          <p className="caption">Војници 1944. године стављају поруку у малу капсулу на нози голуба.</p>
+        </div>
+        <div className="box">
+          <div className="photo">
+            <img src="images/postar.jpg" alt="Поштар" />
+          </div>
+          <h3>Поштар</h3>
+        </div>
+      </div>
+      <p className="lead">Како је рачунар могао да побољша слање порука?</p>
+    </>
+  );
+}
+
+function BigLibrary() {
+  return (
+    <>
+      <h2>Велика библиотека 📚</h2>
+      <div className="photo wide">
+        <img src="images/biblioteka.jpg" alt="Градска библиотека у Стокхолму" />
+      </div>
+      <p className="caption">Градска библиотека у Стокхолму, Шведска</p>
+      <p className="lead">Како би рачунари могли да побољшају посао библиотекара?</p>
+    </>
+  );
+}
+
 function GameSlide() {
   return <Game />;
 }
@@ -89,23 +112,14 @@ function GameSlide() {
 function HowIMakeIt() {
   return (
     <>
-      <h2>Како правим апликацију</h2>
+      <h2>Како се праве апликације</h2>
       <ol className="steps">
-        <li><strong>Смислим</strong>: шта апликација треба да ради?</li>
-        <li><strong>Напишем</strong> упутства (код)</li>
-        <li><strong>Испробам</strong>: да ли ради?</li>
-        <li><strong>Поправим</strong> грешке. Зовемо их „багови“ 🐛</li>
-        <li><strong>Поделим</strong> је са људима!</li>
+        <li><strong>Смислити</strong>: шта апликација треба да ради?</li>
+        <li><strong>Написати</strong> инструкције (код)</li>
+        <li><strong>Испробати</strong>: да ли ради?</li>
+        <li><strong>Поправити</strong> грешке. Оне се зову „багови“ (<em>bugs</em>) 🐛</li>
+        <li><strong>Поделити</strong> је са људима!</li>
       </ol>
-    </>
-  );
-}
-
-function QuestionsIntro() {
-  return (
-    <>
-      <h1>Ваш ред! ✋</h1>
-      <p className="lead">Да видимо шта знате.</p>
     </>
   );
 }
@@ -115,7 +129,7 @@ const question = (text, hint, kicker = "Подигните руку ✋") =>
     return (
       <>
         <p className="kicker">{kicker}</p>
-        <h1>{text}</h1>
+        <h1 className={text.length > 60 ? "long" : undefined}>{text}</h1>
         {hint && <p className="note">{hint}</p>}
       </>
     );
@@ -145,15 +159,12 @@ function ThankYou() {
 const slides = [
   Title,
   WhatIsSoftware,
-  TwoKinds,
-  IBuildApps,
-  GameSlide,
+  BeforeComputers,
+  BigLibrary,
+  WhatIsApp,
   HowIMakeIt,
-  QuestionsIntro,
   question("Ко је користио рачунар?"),
-  question("Ко користи телефон или таблет?"),
-  question("Како сте користили рачунар, телефон или таблет?", null, "Реците ми 💬"),
-  question("Да можете да направите било коју апликацију, шта би она радила?", null, "Реците ми 💬"),
+  GameSlide,
   FindTheBug,
   ThankYou,
 ];
